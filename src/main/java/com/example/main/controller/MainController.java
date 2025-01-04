@@ -3,6 +3,7 @@ package com.example.main.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +29,7 @@ public class MainController {
 	}
 	
 	@RequestMapping(value = "/getAll",method = RequestMethod.GET )
+	@Cacheable(value="employeeInfo") 
 	public List<Employee> getAllData() {
 		List<Employee> allEmp = emps.getEmpData();
 		return allEmp;
