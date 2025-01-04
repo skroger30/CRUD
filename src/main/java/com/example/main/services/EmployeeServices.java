@@ -6,7 +6,7 @@ import com.example.main.model.Employee;
 
 public interface EmployeeServices {
 
-	public void registerEmployee(Employee emp);
-
+	public void registerEmployee(List<Employee> emp);
 	public List<Employee> getEmpData();
+	public void deleteEmpoloyee(int empId);
 }

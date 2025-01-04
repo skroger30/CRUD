@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,16 +22,25 @@ public class MainController {
 	EmployeeServices emps;
 	
 	@RequestMapping(value = "/register",method = RequestMethod.POST )
-	public String registerEmp(@RequestBody() Employee emp) {
+	public String registerEmp(@RequestBody() List<Employee> emp) {
 		emps.registerEmployee(emp);
-		
-		System.out.println("Employee Name="+ emp.getEmpName());
 		return "Registered Successfully.!!!";
 	}
 	
-	@RequestMapping(value = "/getAllData",method = RequestMethod.GET )
+	@RequestMapping(value = "/getAll",method = RequestMethod.GET )
 	public List<Employee> getAllData() {
 		List<Employee> allEmp = emps.getEmpData();
 		return allEmp;
+	}
+	
+	@RequestMapping(value = "/delete/{id}",method = RequestMethod.DELETE)
+	public void deleteEmp(@PathVariable("id") int id) {
+			emps.deleteEmpoloyee(id);
+	}
+	
+	@RequestMapping(value = "/update",method = RequestMethod.PUT )
+	public String updateEmp(@RequestBody() List<Employee> emp) {
+		emps.registerEmployee(emp);
+		return "Upadates Saved Successfully.!!!";
 	}
 }

@@ -16,9 +16,11 @@ public class EmployeeServiceImpl implements EmployeeServices {
 	EmployeeRepository empRepo;
 	
 	@Override
-	public void registerEmployee(Employee emp) {
+	public void registerEmployee(List<Employee> empList) {
 		// TODO Auto-generated method stub
-		empRepo.save(emp);
+		for(Employee emp : empList) {
+			empRepo.save(emp);
+		}		
 	}
 
 	@Override
@@ -27,4 +29,11 @@ public class EmployeeServiceImpl implements EmployeeServices {
 		return empRepo.findAll();
 	}
 
+	@Override
+	public void deleteEmpoloyee(int empId) {
+		// TODO Auto-generated method stub
+		empRepo.deleteById(empId);
+	}
+	
+	
 }
