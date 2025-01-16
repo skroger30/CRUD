@@ -3,6 +3,8 @@ package com.example.main.controller;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,13 +36,13 @@ public class MainController {
 //	@RequestMapping(value = "/register",method = RequestMethod.POST )
 //	OR
 	@PostMapping("/create") 
-	public ResponseEntity<List<Employee>>  registerEmp(@RequestBody() List<Employee> emp) {
+	public ResponseEntity<List<Employee>>  registerEmp(@Valid @RequestBody() List<Employee> emp) {
 		List<Employee> savedUser = emps.registerEmployee(emp);
 		return new ResponseEntity<List<Employee>>(savedUser,HttpStatus.CREATED);
 	}
 
 	@PostMapping("/register") 
-	public ResponseEntity<Employee>  registerSingleEmp(@RequestBody() Employee emp) {
+	public ResponseEntity<Employee>  registerSingleEmp(@Valid @RequestBody() Employee emp) {
 		Employee savedUser = emps.registerSingleEmployee(emp);
 		return new ResponseEntity<Employee>(savedUser,HttpStatus.CREATED);
 	}
@@ -66,7 +68,7 @@ public class MainController {
 	
 //	PUT API - http://localhost:9095/employee/update
 	@RequestMapping(value = "/update",method = RequestMethod.PUT )
-	public String updateEmp(@RequestBody() List<Employee> emp) {
+	public String updateEmp(@Valid @RequestBody() List<Employee> emp) {
 		emps.registerEmployee(emp);
 		return "Upadates Saved Successfully.!!!";
 	}
