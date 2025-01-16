@@ -1,12 +1,16 @@
 package com.example.main.serviceImpl;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.main.exceptionHandler.MobileNumberExistsException;
+import com.example.main.exceptionHandler.ResourceNotFoundException;
 import com.example.main.model.Employee;
 import com.example.main.repository.EmployeeRepository;
 import com.example.main.services.EmployeeServices;
@@ -24,8 +28,12 @@ public class EmployeeServiceImpl implements EmployeeServices {
 		// TODO Auto-generated method stub		
 		 empRepo.saveAll(empList);
 		List<Employee>  list  = getAllCache.getIfPresent("Employees");
-		list.addAll(empList);
-		getAllCache.put("Employees", list);
+		if(Objects.isNull(list))
+			getAllCache.put("Employees", empList);
+		else {
+			list.addAll(empList);
+			getAllCache.put("Employees", list);
+		}
 		return empList;
 	}
  
@@ -58,6 +66,27 @@ public class EmployeeServiceImpl implements EmployeeServices {
 		getAllCache = Caffeine.newBuilder()
                 .maximumSize(100)
                 .build();    
+	}
+
+	@Override
+	public Employee getDetails(int empId) {
+		// TODO Auto-generated method stub
+//		return empRepo.findById(empId).get();//to eliminate Optional return type.
+//		Calling Custom-Exception Class.
+		return empRepo.findById(empId)
+				.orElseThrow( ()-> new ResourceNotFoundException("Employee", "id", empId));
+	}
+
+	@Override
+	public Employee registerSingleEmployee(Employee emp) {
+		// TODO Auto-generated method stub
+		Employee empByMob = empRepo.findByMobileNo(emp.getMobileNo());
+		if(!Objects.isNull(empByMob)) {
+			 throw new MobileNumberExistsException("Employee with same mobile number already exists.");
+		}			 
+		
+		empRepo.save(emp);
+		return emp;
 	}
 	
 }
