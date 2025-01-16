@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
@@ -45,11 +46,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
 	}
 	
 //	Custom Validation Response
+	
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
-			HttpHeaders headers, HttpStatus status, WebRequest request) {
+			HttpHeaders headers, HttpStatusCode status, WebRequest request) {
 		// TODO Auto-generated method stub
-		
 		Map<String, String> errors = new HashMap<>();
 		 List<ObjectError> errorList= ex.getBindingResult().getAllErrors();
 		 errorList.forEach((error) -> {
