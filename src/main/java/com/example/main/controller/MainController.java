@@ -3,8 +3,6 @@ package com.example.main.controller;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +21,12 @@ import com.example.main.exceptionHandler.ResourceNotFoundException;
 import com.example.main.model.Employee;
 import com.example.main.services.EmployeeServices;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 
+@Tag(
+		name = "CRUD Using REST API For Employee Resource",
+		description = "Created to perform Create, Retrieve,Update,Delete operations.")
 @RestController 
 @RequestMapping(value = "/employee")
 public class MainController {
