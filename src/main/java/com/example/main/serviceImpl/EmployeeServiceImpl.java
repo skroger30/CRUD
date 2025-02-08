@@ -39,7 +39,8 @@ public class EmployeeServiceImpl implements EmployeeServices {
 	@Override
 	public List<Employee> getEmpData() {
 		// TODO Auto-generated method stub
-        if(getAllCache.getIfPresent("Employees") !=  null){
+        if(getAllCache.getIfPresent("Employees") !=  null 
+        		&& !getAllCache.getIfPresent("Employees").isEmpty()){
             List<Employee>  list  = getAllCache.getIfPresent("Employees");
             System.out.println("we are retrieving the employee from the cache");
             return list;
