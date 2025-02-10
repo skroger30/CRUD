@@ -56,6 +56,8 @@ public class EmployeeServiceImpl implements EmployeeServices {
 	public void deleteEmpoloyee(int empId) {
 		// TODO Auto-generated method stub
 		empRepo.deleteById(empId);
+		List<Employee>  cachedEmpList  = getAllCache.getIfPresent("Employees");
+		cachedEmpList.removeIf(employee -> employee.getEmpId() == empId );
 	}
 
 //	Caching Implementation - Creating Cache Object
